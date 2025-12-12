@@ -1,0 +1,214 @@
+<!-- KB SITE WITH HOMEPAGE, SEARCH SUMMARY, CLEANED INTERFACE -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KB - Knowledge Base</title>
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; display: flex; height: 100vh; }
+    .sidebar {
+      width: 250px; background-color: #b3e5c2; color: black; padding: 20px;
+      box-sizing: border-box; display: flex; flex-direction: column;
+      height: 100vh; overflow-y: auto; position: relative;
+    }
+    .sidebar h2 { font-size: 20px; margin: 0 0 10px 0; }
+    .sidebar .search-bar { width: 100%; margin-bottom: 10px; display: flex; gap: 5px; align-items: center; }
+    .sidebar .search-bar input {
+      flex: 1; padding: 8px; font-size: 14px; box-sizing: border-box;
+    }
+    .sidebar .search-bar button {
+      width: 30px; height: 30px; background: #b3e5c2; color: black; border: none; cursor: pointer;
+    }
+    .suggestions {
+      background: white; border: 1px solid #ccc; position: absolute;
+      z-index: 100; width: calc(100% - 40px); max-height: 200px; overflow-y: auto; color: black; left: 20px; top: 95px;
+    }
+    .suggestions .group { font-weight: bold; background: #f5f5f5; padding: 6px; }
+    .suggestions div.item { padding: 8px; cursor: pointer; }
+    .suggestions div.item:hover { background-color: #f0f0f0; }
+    .sidebar ul { list-style: none; padding: 0; margin: 0; width: 100%; }
+    .sidebar li { margin-bottom: 10px; }
+    .sidebar .submenu { margin-left: 15px; margin-top: 5px; }
+    .sidebar .toggle {
+      cursor: pointer; font-weight: bold; margin-top: 10px;
+    }
+    .sidebar a { color: black; text-decoration: none; display: block; }
+    .home-link { margin: 10px 0; font-weight: bold; }
+    .content {
+      flex: 1; padding: 30px; background-color: #ecf0f1; overflow-y: auto;
+    }
+    .article h1 { margin-top: 0; }
+    .meta { font-size: 0.9em; color: #555; margin-top: 20px; }
+    .breadcrumb { font-size: 0.85em; color: #777; margin-bottom: 10px; }
+    .highlight { background-color: yellow; font-weight: bold; }
+    .home-btn {
+      background: #4CAF50; color: white; padding: 5px 10px; border: none;
+      margin-bottom: 10px; cursor: pointer; font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Knowledge Base</h2>
+    <div class="search-bar">
+      <input type="text" placeholder="Search..." id="searchInput" onkeyup="showSuggestions(this.value)" onkeypress="if(event.key === 'Enter'){submitSearch()}"/>
+      <button onclick="submitSearch()">🔍</button>
+    </div>
+    <div class="suggestions" id="suggestionBox"></div>
+    <button class="home-btn" onclick="loadHome()">🏠 Home</button>
+    <ul id="menu"></ul>
+  </div>
+  <div class="content">
+    <div class="article" id="articleContent"></div>
+  </div>
+  <script>
+    const articles = {};
+    const categories = ["Croissant", "Strudel", "Waffle", "Crepe", "Tart", "Pie", "Cake", "Soup", "Bread", "Stew", "Curry", "Pizza", "Salad", "Pasta", "Baguette"];
+    const countries = ["General", "France", "Portugal", "Germany", "Austria", "Hungary", "Belgium", "Switzerland", "Italy", "Spain"];
+    const topics = [];
+    const recentChanges = new Set(["Strudel - Germany", "Croissant - France"]);
+
+    categories.forEach(cat => {
+      countries.forEach(country => {
+        const key = `${cat} - ${country}`;
+        topics.push(key);
+        const updated = recentChanges.has(key) ? " · Recently updated." : " · No recent changes.";
+        articles[key] = `<div class='breadcrumb'>Home > ${cat} > ${country}</div><h1>${key}</h1><p>This is a traditional ${cat.toLowerCase()} recipe as used in ${country}. It usually involves specific local ingredients and preparation methods. Ensure you follow the local notes if available.</p><p>Typical ingredients: flour, eggs, milk, butter. Optional variations might include local spices or fillings.</p><p>Recommended pairings: coffee, tea, or regional desserts.</p><div class='meta'>Last updated: 2025-08-01${updated}</div>`;
+      });
+    });
+
+    function buildMenu() {
+      const menu = document.getElementById("menu");
+      categories.forEach(cat => {
+        const id = cat.toLowerCase();
+        const li = document.createElement("li");
+        const toggle = document.createElement("div");
+        toggle.className = "toggle";
+        toggle.textContent = `▸ ${cat}`;
+        toggle.onclick = () => toggleSubmenu(id);
+        li.appendChild(toggle);
+
+        const submenu = document.createElement("ul");
+        submenu.className = "submenu";
+        submenu.id = `submenu-${id}`;
+        submenu.style.display = "none";
+
+        countries.forEach(country => {
+          const topic = `${cat} - ${country}`;
+          const subli = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = `#${topic}`;
+          a.textContent = country;
+          a.onclick = () => {
+            expandSubmenu(id);
+            loadArticle(topic);
+          };
+          subli.appendChild(a);
+          submenu.appendChild(subli);
+        });
+        li.appendChild(submenu);
+        menu.appendChild(li);
+      });
+    }
+
+    function toggleSubmenu(id) {
+      const submenu = document.getElementById(`submenu-${id}`);
+      submenu.style.display = submenu.style.display === "none" ? "block" : "none";
+    }
+
+    function expandSubmenu(id) {
+      const submenu = document.getElementById(`submenu-${id}`);
+      submenu.style.display = "block";
+    }
+
+    function showSuggestions(value) {
+      const suggestionBox = document.getElementById("suggestionBox");
+      suggestionBox.innerHTML = "";
+      if (!value) {
+        suggestionBox.style.display = "none";
+        return;
+      }
+      const inputWords = value.toLowerCase().split(" ");
+      const exactMatches = topics.filter(topic => {
+        const normalized = topic.toLowerCase();
+        return inputWords.every(word => normalized.includes(word));
+      });
+
+      suggestionBox.style.display = "block";
+      if (exactMatches.length > 0) {
+        suggestionBox.innerHTML += `<div class='group'>Matching titles:</div>`;
+        exactMatches.slice(0, 5).forEach(match => appendSuggestion(match));
+      } else {
+        suggestionBox.innerHTML = "<div>No matches found.</div>";
+      }
+    }
+
+    function appendSuggestion(match) {
+      const div = document.createElement("div");
+      div.className = "item";
+      div.textContent = match;
+      div.onclick = () => {
+        document.getElementById("searchInput").value = match;
+        document.getElementById("suggestionBox").innerHTML = "";
+        document.getElementById("suggestionBox").style.display = "none";
+        const parts = match.split(" - ");
+        if (parts.length === 2) expandSubmenu(parts[0].toLowerCase());
+        loadArticle(match);
+      };
+      document.getElementById("suggestionBox").appendChild(div);
+    }
+
+    function submitSearch() {
+      const value = document.getElementById("searchInput").value.toLowerCase();
+      const matched = topics.filter(topic => value.split(" ").every(w => topic.toLowerCase().includes(w)));
+      if (matched.length > 0) {
+        let list = `<h1>Search results for \"${value}\"</h1><ul>`;
+        matched.forEach(m => list += `<li><a href="#" onclick="loadArticle('${m}')">${m}</a></li>`);
+        list += "</ul>";
+        document.getElementById("articleContent").innerHTML = list;
+      } else {
+        document.getElementById("articleContent").innerHTML = `<h1>No matches found for \"${value}\"</h1><p>Try different keywords or check spelling.</p>`;
+      }
+    }
+
+    function loadArticle(title, highlightWords = []) {
+      let html = articles[title] || `<h1>${title}</h1><p>This topic inherits from the general procedure.</p>`;
+      highlightWords.forEach(word => {
+        const regex = new RegExp(`(${word})`, "gi");
+        html = html.replace(regex, '<span class="highlight">$1</span>');
+      });
+      document.getElementById("articleContent").innerHTML = html + `<p><a href="#" onclick="loadHome();return false;">Back to home</a></p>`;
+    }
+
+    function loadHome() {
+      document.getElementById("articleContent").innerHTML = `
+        <h1>Welcome to the Knowledge Base</h1>
+        <p>This internal resource contains structured documentation of recipes and procedures used in various countries.</p>
+        <h2>🆕 Recent Updates</h2>
+        <ul>
+          <li>Croissant - France · Updated on 2025-08-01</li>
+          <li>Strudel - Germany · Updated on 2025-08-01</li>
+        </ul>
+        <h2>📝 New Articles</h2>
+        <ul>
+          <li>Pizza - Italy</li>
+          <li>Curry - General</li>
+          <li>Salad - Portugal</li>
+        </ul>
+        <h2>🌐 Extra Highlights</h2>
+        <ul>
+          <li>Did you know? The first strudel recipes date back to 1696 in Vienna!</li>
+          <li>Popular pairing: Pasta with Portuguese wine is trending this season.</li>
+          <li>Tip: Soups from Hungary often include paprika and sour cream for richness.</li>
+          <li>Fun fact: Baguette was officially recognized as part of France's cultural heritage in 2022.</li>
+          <li>New recipe spotlight: Crepe - Spain added with a twist of citrus!</li>
+          <li>Explore: Waffle - Belgium with maple drizzle and nut crunch topping.</li>
+        </ul>`;
+    }
+
+    buildMenu();
+    loadHome();
+  </script>
+</body>
+</html>
