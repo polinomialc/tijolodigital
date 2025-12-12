@@ -1,148 +1,136 @@
 from pathlib import Path
 
+# ==============================
+# CONFIG
+# ==============================
+
 BASE = Path(__file__).resolve().parent
 ARTS_DIR = BASE / "images" / "arts"
 PAGES_DIR = BASE / "pages"
 
+IMAGE_EXTS = ("*.jpg", "*.jpeg", "*.png", "*.webp")
+
 PAGES_DIR.mkdir(exist_ok=True)
 
-# === CSS + HTML BASE (IGUAL AO INDEX) ===
-HTML_HEAD = """
-<!DOCTYPE html>
+# ==============================
+# TEMPLATE HTML (TRABALHO)
+# ==============================
+
+def render_page(title: str, work_name: str, image_tags: str) -> str:
+    return f"""<!DOCTYPE html>
 <html lang="pt">
 <head>
-<meta charset="UTF-8">
-<title>Tijolo Digital</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
-  margin:0; background:#c0c0c0; color:#000;
-  font-family: Verdana, Tahoma, sans-serif; font-size: 13px;
-}
-a { color:#0000ee; text-decoration: underline; }
+  <meta charset="UTF-8">
+  <title>{title}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {{
+      margin:0;
+      background:#dcd9ff;
+      font-family: Verdana, Tahoma, sans-serif;
+      color:#000;
+    }}
 
-.window {
-  width: 960px; margin: 30px auto; background:#fff;
-  border: 2px solid #000; box-shadow: 5px 5px 0 #555;
-}
-.title-bar {
-  background: linear-gradient(to right, #000080, #0000ff);
-  color:#fff; padding: 6px 10px; font-weight: bold;
-  display:flex; justify-content: space-between; align-items:center;
-}
-.title-buttons span {
-  display:inline-block; width:12px; height:12px; margin-left:4px;
-  background:#c0c0c0; border:1px solid #000;
-}
-.header-img {
-  border-bottom: 2px solid #000;
-  padding: 10px; text-align:center; background:#fff;
-}
-.header-img img {
-  max-width: 100%;
-  image-rendering: pixelated;
-}
-.content { display:flex; }
-.sidebar {
-  width: 240px; background:#e0e0e0; border-right:2px solid #000;
-  padding: 10px;
-}
-.sidebar h3 {
-  font-size: 13px; margin: 0 0 8px 0;
-  border-bottom: 1px solid #000; padding-bottom: 4px;
-}
-.nav-item {
-  display:flex; align-items:center; gap:10px;
-  margin: 10px 0;
-}
-.nav-item img {
-  width: 48px; height: 48px;
-  image-rendering: pixelated;
-  border: 1px solid #000;
-  background:#fff;
-}
-.main { flex:1; padding: 15px; }
-.section { margin-bottom: 28px; }
-.section h2 {
-  font-size: 14px; background:#000080; color:#fff;
-  padding: 4px 6px; margin: 0 0 15px 0;
-}
-.art-image {
-  max-width: 100%;
-  margin: 20px auto;
-  display: block;
-  border: 1px solid #000;
-  background:#fff;
-}
-.footer {
-  background:#e0e0e0; border-top:2px solid #000;
-  padding: 10px; text-align:center; font-size: 11px;
-}
-</style>
+    .header {{
+      text-align:center;
+      padding:40px 10px 20px;
+    }}
+
+    .logo {{
+      max-width:90%;
+      image-rendering: pixelated;
+    }}
+
+    .subtitle {{
+      font-family: "Comic Sans MS", Comic Sans, cursive;
+      font-style: italic;
+      text-decoration: underline;
+      margin-top:10px;
+    }}
+
+    .path {{
+      text-align:center;
+      margin:30px 0 20px;
+      font-size:14px;
+    }}
+
+    .gallery {{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:40px;
+      padding-bottom:80px;
+    }}
+
+    .gallery img {{
+      max-width:90%;
+      height:auto;
+    }}
+
+    a {{
+      color:#0000ee;
+    }}
+  </style>
 </head>
-<body>
-"""
 
-HTML_FOOT = """
-  <div class="footer">
-    © 1999–2025 Tijolo Digital · Best viewed at 1024×768 · No cookies · No tracking
+<body>
+
+  <div class="header">
+    <img src="../images/header_title.gif" class="logo" alt="Tijolo Digital">
+    <div class="subtitle">Tijolo Digital</div>
   </div>
-</div>
+
+  <div class="path">
+    C:\\tijolodigital\\photography\\{work_name}
+  </div>
+
+  <div class="gallery">
+    {image_tags}
+  </div>
+
 </body>
 </html>
 """
 
-def generate_page(folder_name, images):
-    title_path = f"C:\\\\tijolodigital\\\\photography\\\\{folder_name}"
+# ==============================
+# BUILD PAGES
+# ==============================
 
-    images_html = "\n".join(
-        f'<img src="../images/arts/{folder_name}/{img.name}" class="art-image">'
-        for img in images
-    )
+def build_pages():
+    if not ARTS_DIR.exists():
+        raise SystemExit(f"ERRO: pasta não encontrada: {ARTS_DIR}")
 
-    return f"""{HTML_HEAD}
-<div class="window">
-  <div class="title-bar">
-    <span>Tijolo Digital — Internet Explorer</span>
-    <div class="title-buttons"><span></span><span></span><span></span></div>
-  </div>
+    for work_dir in sorted(p for p in ARTS_DIR.iterdir() if p.is_dir()):
+        images = []
 
-  <div class="header-img">
-    <img src="../images/header_title.gif" alt="Tijolo Digital">
-  </div>
+        for ext in IMAGE_EXTS:
+            images.extend(work_dir.glob(ext))
 
-  <div class="content">
-    <div class="sidebar">
-      <h3>Navigation</h3>
-      <div class="nav-item">
-        <img src="../images/icons/folder.png">
-        <a href="../index.html">C:\\tijolodigital\\home</a>
-      </div>
-    </div>
+        images = sorted(images)
 
-    <div class="main">
-      <div class="section">
-        <h2>{title_path}</h2>
-        {images_html}
-      </div>
-    </div>
-  </div>
-{HTML_FOOT}
-"""
+        if not images:
+            print(f"[WARN] {work_dir.name}: nenhuma imagem encontrada")
+            continue
 
-# === GERAR PÁGINAS ===
-print("\nGerando páginas de arte:\n")
+        # gera tags <img> com path correto
+        tags = []
+        for img in images:
+            src = f"../images/arts/{work_dir.name}/{img.name}"
+            tags.append(f'<img src="{src}" alt="">')
 
-for folder in sorted(p for p in ARTS_DIR.iterdir() if p.is_dir()):
-    images = sorted(folder.glob("*.jpg"))
+        html = render_page(
+            title=f"Tijolo Digital — {work_dir.name}",
+            work_name=work_dir.name,
+            image_tags="\n    ".join(tags)
+        )
 
-    if not images:
-        continue
+        out = PAGES_DIR / f"{work_dir.name}.html"
+        out.write_text(html, encoding="utf-8")
+        print(f"[OK] gerado: pages/{out.name}")
 
-    html = generate_page(folder.name, images)
-    out = PAGES_DIR / f"{folder.name}.html"
-    out.write_text(html, encoding="utf-8")
+# ==============================
+# RUN
+# ==============================
 
-    print(f"✔ pages/{folder.name}.html ({len(images)} imagens)")
-
-print("\nConcluído.")
+if __name__ == "__main__":
+    build_pages()

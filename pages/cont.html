@@ -1,115 +1,79 @@
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-<meta charset="UTF-8">
-<title>Tijolo Digital</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
-  margin:0; background:#c0c0c0; color:#000;
-  font-family: Verdana, Tahoma, sans-serif; font-size: 13px;
-}
-a { color:#0000ee; text-decoration: underline; }
+  <meta charset="UTF-8">
+  <title>Tijolo Digital — cont</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      margin:0;
+      background:#dcd9ff;
+      font-family: Verdana, Tahoma, sans-serif;
+      color:#000;
+    }
 
-.window {
-  width: 960px; margin: 30px auto; background:#fff;
-  border: 2px solid #000; box-shadow: 5px 5px 0 #555;
-}
-.title-bar {
-  background: linear-gradient(to right, #000080, #0000ff);
-  color:#fff; padding: 6px 10px; font-weight: bold;
-  display:flex; justify-content: space-between; align-items:center;
-}
-.title-buttons span {
-  display:inline-block; width:12px; height:12px; margin-left:4px;
-  background:#c0c0c0; border:1px solid #000;
-}
-.header-img {
-  border-bottom: 2px solid #000;
-  padding: 10px; text-align:center; background:#fff;
-}
-.header-img img {
-  max-width: 100%;
-  image-rendering: pixelated;
-}
-.content { display:flex; }
-.sidebar {
-  width: 240px; background:#e0e0e0; border-right:2px solid #000;
-  padding: 10px;
-}
-.sidebar h3 {
-  font-size: 13px; margin: 0 0 8px 0;
-  border-bottom: 1px solid #000; padding-bottom: 4px;
-}
-.nav-item {
-  display:flex; align-items:center; gap:10px;
-  margin: 10px 0;
-}
-.nav-item img {
-  width: 48px; height: 48px;
-  image-rendering: pixelated;
-  border: 1px solid #000;
-  background:#fff;
-}
-.main { flex:1; padding: 15px; }
-.section { margin-bottom: 28px; }
-.section h2 {
-  font-size: 14px; background:#000080; color:#fff;
-  padding: 4px 6px; margin: 0 0 15px 0;
-}
-.art-image {
-  max-width: 100%;
-  margin: 20px auto;
-  display: block;
-  border: 1px solid #000;
-  background:#fff;
-}
-.footer {
-  background:#e0e0e0; border-top:2px solid #000;
-  padding: 10px; text-align:center; font-size: 11px;
-}
-</style>
+    .header {
+      text-align:center;
+      padding:40px 10px 20px;
+    }
+
+    .logo {
+      max-width:90%;
+      image-rendering: pixelated;
+    }
+
+    .subtitle {
+      font-family: "Comic Sans MS", Comic Sans, cursive;
+      font-style: italic;
+      text-decoration: underline;
+      margin-top:10px;
+    }
+
+    .path {
+      text-align:center;
+      margin:30px 0 20px;
+      font-size:14px;
+    }
+
+    .gallery {
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:40px;
+      padding-bottom:80px;
+    }
+
+    .gallery img {
+      max-width:90%;
+      height:auto;
+    }
+
+    a {
+      color:#0000ee;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="window">
-  <div class="title-bar">
-    <span>Tijolo Digital — Internet Explorer</span>
-    <div class="title-buttons"><span></span><span></span><span></span></div>
+  <div class="header">
+    <img src="../images/header_title.gif" class="logo" alt="Tijolo Digital">
+    <div class="subtitle">Tijolo Digital</div>
   </div>
 
-  <div class="header-img">
-    <img src="../images/header_title.gif" alt="Tijolo Digital">
+  <div class="path">
+    C:\tijolodigital\photography\cont
   </div>
 
-  <div class="content">
-    <div class="sidebar">
-      <h3>Navigation</h3>
-      <div class="nav-item">
-        <img src="../images/icons/folder.png">
-        <a href="../index.html">C:\tijolodigital\home</a>
-      </div>
-    </div>
-
-    <div class="main">
-      <div class="section">
-        <h2>C:\\tijolodigital\\photography\\cont</h2>
-        <img src="../images/arts/cont/0.1 normal.jpg" class="art-image">
-<img src="../images/arts/cont/0.2 normal.jpg" class="art-image">
-<img src="../images/arts/cont/0.3 normal.jpg" class="art-image">
-<img src="../images/arts/cont/0.4 normal.jpg" class="art-image">
-<img src="../images/arts/cont/0.5 normal resolução 150.jpg" class="art-image">
-<img src="../images/arts/cont/0.6 normal.jpg" class="art-image">
-<img src="../images/arts/cont/0.7 normal.jpg" class="art-image">
-      </div>
-    </div>
+  <div class="gallery">
+    <img src="../images/arts/cont/0.1 normal.jpg" alt="">
+    <img src="../images/arts/cont/0.2 normal.jpg" alt="">
+    <img src="../images/arts/cont/0.3 normal.jpg" alt="">
+    <img src="../images/arts/cont/0.4 normal.jpg" alt="">
+    <img src="../images/arts/cont/0.5 normal resolução 150.jpg" alt="">
+    <img src="../images/arts/cont/0.6 normal.jpg" alt="">
+    <img src="../images/arts/cont/0.7 normal.jpg" alt="">
   </div>
 
-  <div class="footer">
-    © 1999–2025 Tijolo Digital · Best viewed at 1024×768 · No cookies · No tracking
-  </div>
-</div>
 </body>
 </html>
-
