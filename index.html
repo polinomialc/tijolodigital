@@ -1,244 +1,184 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <title>Tijolo Digital</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      margin:0; background:#c0c0c0; color:#000;
-      font-family: Verdana, Tahoma, sans-serif; font-size: 13px;
-    }
-    a { color:#0000ee; text-decoration: underline; }
+<meta charset="UTF-8">
+<title>Tijolo Digital</title>
 
-    .window {
-      width: 960px; margin: 30px auto; background:#fff;
-      border: 2px solid #000; box-shadow: 5px 5px 0 #555;
-    }
-    .title-bar {
-      background: linear-gradient(to right, #000080, #0000ff);
-      color:#fff; padding: 6px 10px; font-weight: bold;
-      display:flex; justify-content: space-between; align-items:center;
-    }
-    .title-buttons span {
-      display:inline-block; width:12px; height:12px; margin-left:4px;
-      background:#c0c0c0; border:1px solid #000;
-    }
+<style>
+  body {
+    margin: 0;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 13px;
+    color: #000;
+    background: #9ec9ff; /* fundo temporário */
+    background-image: linear-gradient(#bcdcff, #9ec9ff);
+  }
 
-    .header-img {
-      border-bottom: 2px solid #000;
-      padding: 10px; text-align:center; background:#fff;
-    }
-    .header-img img {
-      max-width: 100%;
-      image-rendering: pixelated;
-    }
+  a {
+    color: #0000ee;
+    text-decoration: underline;
+  }
 
-    .content { display:flex; }
-    .sidebar {
-      width: 240px; background:#e0e0e0; border-right:2px solid #000;
-      padding: 10px;
-    }
-    .sidebar h3 {
-      font-size: 13px; margin: 0 0 8px 0;
-      border-bottom: 1px solid #000;
-      padding-bottom: 4px;
-    }
+  .page {
+    width: 900px;
+    margin: 20px auto;
+    background: #ffffff;
+    border: 2px solid #000;
+    box-shadow: 6px 6px 0 #555;
+  }
 
-    .nav-item {
-      display:flex; align-items:center; gap:10px;
-      margin: 10px 0;
-    }
-    .nav-item img {
-      width: 48px; height: 48px;
-      image-rendering: pixelated;
-      border: 1px solid #000;
-      background:#fff;
-    }
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 15px;
+    border-bottom: 2px solid #000;
+    background: #e6f0ff;
+  }
 
-    .main { flex:1; padding: 15px; }
-    .section { margin-bottom: 28px; }
-    .section h2 {
-      font-size: 14px; background:#000080; color:#fff;
-      padding: 4px 6px; margin: 0 0 10px 0;
-    }
+  .header img {
+    image-rendering: pixelated;
+  }
 
-    .grid {
-      display:grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 15px;
-    }
-    .card {
-      border:2px solid #000; background:#f5f5f5; padding: 8px;
-    }
-    .card img {
-      width:100%; border:1px solid #000; background:#fff;
-    }
-    .card iframe { width:100%; height:160px; border:0; }
-    .card p { margin: 8px 0 0; font-size: 12px; }
+  .header h1 {
+    margin: 10px 0 0;
+    font-size: 20px;
+    letter-spacing: 1px;
+  }
 
-    .footer {
-      background:#e0e0e0; border-top:2px solid #000;
-      padding: 10px; text-align:center; font-size: 11px;
-    }
+  /* MAIN AREA */
+  .main {
+    display: flex;
+    padding: 20px;
+    gap: 30px;
+    justify-content: center;
+    align-items: flex-start;
+  }
 
-    @media (max-width: 960px) {
-      .window { width: 95%; }
-      .content { flex-direction: column; }
-      .sidebar { width: auto; border-right:none; border-bottom:2px solid #000; }
-      .nav-item img { width: 40px; height: 40px; }
-    }
-  </style>
+  /* MENU */
+  .menu {
+    width: 320px;
+    background: #eef3ff;
+    border: 2px solid #000;
+    padding: 10px;
+  }
+
+  .menu h2 {
+    font-size: 14px;
+    margin: 0 0 10px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #000;
+    text-align: center;
+  }
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 8px 0;
+  }
+
+  .menu-item img {
+    width: 32px;
+    height: 32px;
+    image-rendering: pixelated;
+    border: 1px solid #000;
+    background: #fff;
+  }
+
+  /* AVATAR */
+  .avatar {
+    text-align: center;
+  }
+
+  .avatar img {
+    width: 260px;
+    border: 2px solid #000;
+    background: #fff;
+  }
+
+  .avatar p {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #333;
+  }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 10px;
+    border-top: 2px solid #000;
+    background: #e0e0e0;
+    font-size: 11px;
+  }
+</style>
 </head>
+
 <body>
 
-<div class="window">
-  <div class="title-bar">
-    <span>Tijolo Digital — Internet Explorer</span>
-    <div class="title-buttons"><span></span><span></span><span></span></div>
-  </div>
+<div class="page">
 
-  <div class="header-img">
+  <!-- HEADER -->
+  <div class="header">
     <img src="images/header_title.gif" alt="Tijolo Digital">
+    <h1>Tijolo Digital</h1>
   </div>
 
-  <div class="content">
-    <div class="sidebar">
+  <!-- MAIN -->
+  <div class="main">
 
-      <h3>Navigation</h3>
+    <!-- MENU DE TRABALHOS -->
+    <div class="menu">
+      <h2>Photography</h2>
 
-      <div class="nav-item">
-        <img src="images/icons/video_mg-2.png">
-        <a href="#about">About</a>
-      </div>
-
-      <div class="nav-item">
-        <img src="images/icons/directory_network_conn_shortcut-2.png">
-        <a href="#works">Works</a>
-      </div>
-
-      <div class="nav-item">
-        <img src="images/icons/camera3-2.png">
-        <a href="#works">Images</a>
-      </div>
-
-      <div class="nav-item">
-        <img src="images/icons/video_mg-2.png">
-        <a href="#video">Video</a>
-      </div>
-
-      <div class="nav-item">
-        <img src="images/icons/mailbox_world-2.png">
-        <a href="#contact">Contact</a>
-      </div>
-
-      <h3>Photography</h3>
-
-      <div class="nav-item">
+      <div class="menu-item">
         <img src="images/icons/directory_closed-4.png">
         <a href="pages/cont.html">C:\tijolodigital\photography\cont</a>
       </div>
 
-      <div class="nav-item">
+      <div class="menu-item">
         <img src="images/icons/directory_closed-4.png">
         <a href="pages/dayd.html">C:\tijolodigital\photography\dayd</a>
       </div>
 
-      <div class="nav-item">
+      <div class="menu-item">
         <img src="images/icons/directory_closed-4.png">
         <a href="pages/design.html">C:\tijolodigital\photography\design</a>
       </div>
 
-      <div class="nav-item">
+      <div class="menu-item">
         <img src="images/icons/directory_closed-4.png">
         <a href="pages/digital.html">C:\tijolodigital\photography\digital</a>
       </div>
 
-      <div class="nav-item">
+      <div class="menu-item">
         <img src="images/icons/directory_closed-4.png">
         <a href="pages/logo.html">C:\tijolodigital\photography\logo</a>
       </div>
 
-      <div class="nav-item">
+      <div class="menu-item">
         <img src="images/icons/directory_closed-4.png">
         <a href="pages/memoria.html">C:\tijolodigital\photography\memoria</a>
       </div>
 
-      <div class="nav-item">
+      <div class="menu-item">
         <img src="images/icons/directory_closed-4.png">
         <a href="pages/santaelena.html">C:\tijolodigital\photography\santaelena</a>
       </div>
-
-      <h3>External</h3>
-
-      <div class="nav-item">
-        <img src="images/icons/display_properties-4.png">
-        <a href="#">YouTube</a>
-      </div>
-
-      <div class="nav-item">
-        <img src="images/icons/camera3_network-4.png">
-        <a href="#">Instagram</a>
-      </div>
-
     </div>
 
-    <div class="main">
-
-      <div class="section" id="about">
-        <h2>About Tijolo Digital</h2>
-        <p>
-          Tijolo Digital é um portfólio artístico com estética retrô (web 1.0 / anos 2000).
-          Conteúdo: imagem + vídeo. Sem tracking. Sem frescura.
-        </p>
-      </div>
-
-      <div class="section" id="works">
-        <h2>Selected Works (Image)</h2>
-        <div class="grid">
-          <div class="card">
-            <img src="images/works/art01.webp">
-            <p>Artwork 01 — Digital / Concept</p>
-          </div>
-          <div class="card">
-            <img src="images/works/art02.webp">
-            <p>Artwork 02 — Illustration</p>
-          </div>
-          <div class="card">
-            <img src="images/works/art03.webp">
-            <p>Artwork 03 — Visual Study</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="section" id="video">
-        <h2>Video / Motion</h2>
-        <div class="grid">
-          <div class="card">
-            <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" allowfullscreen></iframe>
-            <p>Motion Piece 01</p>
-          </div>
-          <div class="card">
-            <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" allowfullscreen></iframe>
-            <p>Experimental Video</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="section" id="contact">
-        <h2>Contact</h2>
-        <p>
-          Email: <a href="mailto:email@email.com">email@email.com</a><br>
-          Location: Portugal
-        </p>
-      </div>
-
+    <!-- AVATAR -->
+    <div class="avatar">
+      <img src="avatar_home.jpg" alt="Avatar">
+      <p>Bem-vindo ao Tijolo Digital</p>
     </div>
+
   </div>
 
+  <!-- FOOTER -->
   <div class="footer">
-    © 1999–2025 Tijolo Digital · Best viewed at 1024×768 · No cookies · No tracking
+    © 1999–2025 Tijolo Digital · Best viewed at 1024×768 · No tracking
   </div>
+
 </div>
 
 </body>
