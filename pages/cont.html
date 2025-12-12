@@ -1,13 +1,4 @@
-from pathlib import Path
 
-BASE = Path(__file__).resolve().parent
-ARTS_DIR = BASE / "images" / "arts"
-PAGES_DIR = BASE / "pages"
-
-PAGES_DIR.mkdir(exist_ok=True)
-
-# === CSS + HTML BASE (IGUAL AO INDEX) ===
-HTML_HEAD = """
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -81,26 +72,7 @@ a { color:#0000ee; text-decoration: underline; }
 </style>
 </head>
 <body>
-"""
 
-HTML_FOOT = """
-  <div class="footer">
-    © 1999–2025 Tijolo Digital · Best viewed at 1024×768 · No cookies · No tracking
-  </div>
-</div>
-</body>
-</html>
-"""
-
-def generate_page(folder_name, images):
-    title_path = f"C:\\\\tijolodigital\\\\photography\\\\{folder_name}"
-
-    images_html = "\n".join(
-        f'<img src="../images/arts/{folder_name}/{img.name}" class="art-image">'
-        for img in images
-    )
-
-    return f"""{HTML_HEAD}
 <div class="window">
   <div class="title-bar">
     <span>Tijolo Digital — Internet Explorer</span>
@@ -116,33 +88,28 @@ def generate_page(folder_name, images):
       <h3>Navigation</h3>
       <div class="nav-item">
         <img src="../images/icons/folder.png">
-        <a href="../index.html">C:\\tijolodigital\\home</a>
+        <a href="../index.html">C:\tijolodigital\home</a>
       </div>
     </div>
 
     <div class="main">
       <div class="section">
-        <h2>{title_path}</h2>
-        {images_html}
+        <h2>C:\\tijolodigital\\photography\\cont</h2>
+        <img src="../images/arts/cont/0.1 normal.jpg" class="art-image">
+<img src="../images/arts/cont/0.2 normal.jpg" class="art-image">
+<img src="../images/arts/cont/0.3 normal.jpg" class="art-image">
+<img src="../images/arts/cont/0.4 normal.jpg" class="art-image">
+<img src="../images/arts/cont/0.5 normal resolução 150.jpg" class="art-image">
+<img src="../images/arts/cont/0.6 normal.jpg" class="art-image">
+<img src="../images/arts/cont/0.7 normal.jpg" class="art-image">
       </div>
     </div>
   </div>
-{HTML_FOOT}
-"""
 
-# === GERAR PÁGINAS ===
-print("\nGerando páginas de arte:\n")
+  <div class="footer">
+    © 1999–2025 Tijolo Digital · Best viewed at 1024×768 · No cookies · No tracking
+  </div>
+</div>
+</body>
+</html>
 
-for folder in sorted(p for p in ARTS_DIR.iterdir() if p.is_dir()):
-    images = sorted(folder.glob("*.jpg"))
-
-    if not images:
-        continue
-
-    html = generate_page(folder.name, images)
-    out = PAGES_DIR / f"{folder.name}.html"
-    out.write_text(html, encoding="utf-8")
-
-    print(f"✔ pages/{folder.name}.html ({len(images)} imagens)")
-
-print("\nConcluído.")
