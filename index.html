@@ -3,95 +3,154 @@
 <head>
 <meta charset="UTF-8">
 <title>Tijolo Digital</title>
+
 <style>
-body {
-  margin:0;
-  background:#dcd9ff;
-  font-family: Verdana, Tahoma, sans-serif;
-  color:#000;
-}
+  body {
+    margin: 0;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 13px;
+    color: #000;
+    background: #d6d2ff; /* lilás pastel estilo Windows antigo */
+    cursor: url("images/icons/mouse-5.png") 4 4, auto;
+  }
 
-.logo {
-  text-align:center;
-  margin-top:30px;
-}
+  a {
+    color: #0000ee;
+    text-decoration: underline;
+  }
 
-.logo img {
-  max-width:600px;
-}
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 25px 10px 10px;
+  }
 
-.subtitle {
-  text-align:center;
-  font-family: "Comic Sans MS", Comic Sans, cursive;
-  font-style: italic;
-  text-decoration: underline;
-  margin-bottom:40px;
-}
+  .header img {
+    image-rendering: pixelated;
+    max-width: 100%;
+  }
 
-.main {
-  display:flex;
-  justify-content:center;
-  gap:80px;
-}
+  .subtitle {
+    margin-top: 6px;
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-size: 13px;
+    font-style: italic;
+    text-decoration: underline;
+  }
 
-.menu {
-  background:#efefff;
-  padding:20px;
-}
+  /* MAIN */
+  .main {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 50px;
+    padding: 30px 10px;
+  }
 
-.menu-item {
-  display:flex;
-  align-items:center;
-  margin:12px 0;
-}
+  /* MENU */
+  .menu {
+    background: #eef;
+    padding: 12px 16px;
+  }
 
-.menu-item img {
-  width:32px;
-  height:32px;
-  margin-right:10px;
-}
+  .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 8px 0;
+    white-space: nowrap;
+  }
 
-.menu a {
-  color:#0000ee;
-  text-decoration: underline;
-}
+  .menu-item img {
+    width: 32px;
+    height: 32px;
+    image-rendering: pixelated;
+    background: #fff;
+    border: 1px solid #000;
+  }
+
+  /* AVATAR */
+  .avatar {
+    text-align: center;
+  }
+
+  .avatar img {
+    width: 260px;
+    background: #fff;
+    border: 1px solid #000;
+  }
+
+  .avatar p {
+    margin-top: 6px;
+    font-size: 12px;
+  }
+
+  @media (max-width: 900px) {
+    .main {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
 </style>
 </head>
 
 <body>
 
-<div class="logo">
+<!-- HEADER -->
+<div class="header">
   <img src="images/header_title.gif" alt="Tijolo Digital">
+  <div class="subtitle">Tijolo Digital</div>
 </div>
 
-<div class="subtitle">Tijolo Digital</div>
-
+<!-- MAIN -->
 <div class="main">
+
+  <!-- MENU DE TRABALHOS -->
   <div class="menu">
 
-<div class="menu-item">
-  <img src="images/icons/folder-2.png">
-  <a href="pages/cont.html">C:\tijolodigital\photography\cont</a>
-</div>
+    <div class="menu-item">
+      <img src="images/icons/directory_closed-4.png">
+      <a href="pages/cont.html">C:\tijolodigital\photography\cont</a>
+    </div>
 
+    <div class="menu-item">
+      <img src="images/icons/directory_closed-4.png">
+      <a href="pages/dayd.html">C:\tijolodigital\photography\dayd</a>
+    </div>
 
-<div class="menu-item">
-  <img src="images/icons/folder-2.png">
-  <a href="pages/dayd.html">C:\tijolodigital\photography\dayd</a>
-</div>
+    <div class="menu-item">
+      <img src="images/icons/directory_closed-4.png">
+      <a href="pages/design.html">C:\tijolodigital\photography\design</a>
+    </div>
 
+    <div class="menu-item">
+      <img src="images/icons/directory_closed-4.png">
+      <a href="pages/digital.html">C:\tijolodigital\photography\digital</a>
+    </div>
 
-<div class="menu-item">
-  <img src="images/icons/folder-2.png">
-  <a href="pages/memoria.html">C:\tijolodigital\photography\memoria</a>
-</div>
+    <div class="menu-item">
+      <img src="images/icons/directory_closed-4.png">
+      <a href="pages/logo.html">C:\tijolodigital\photography\logo</a>
+    </div>
+
+    <div class="menu-item">
+      <img src="images/icons/directory_closed-4.png">
+      <a href="pages/memoria.html">C:\tijolodigital\photography\memoria</a>
+    </div>
+
+    <div class="menu-item">
+      <img src="images/icons/directory_closed-4.png">
+      <a href="pages/santaelena.html">C:\tijolodigital\photography\santaelena</a>
+    </div>
 
   </div>
 
-  <div>
-    <img src="images/avatar_home.jpg" alt="Avatar">
-    <div>Bem-vindo ao Tijolo Digital</div>
+  <!-- AVATAR -->
+  <div class="avatar">
+    <img src="avatar_home.jpg" alt="Avatar">
+    <p>Bem-vindo ao Tijolo Digital</p>
   </div>
+
 </div>
 
 </body>
